@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { getRandomVerse } from '../data/bibleVerses';
 import type { BibleVerse } from '../data/bibleVerses';
 
-const photos2023 = import.meta.glob('/src/assets/photos/2023/*.{png,jpg,svg}', { eager: true, import: 'default' });
-const photos2024 = import.meta.glob('/src/assets/photos/2024/*.{png,jpg,svg}', { eager: true, import: 'default' });
-const photos2025 = import.meta.glob('/src/assets/photos/2025/*.{png,jpg,svg}', { eager: true, import: 'default' });
-const photos2026 = import.meta.glob('/src/assets/photos/2026/*.{png,jpg,svg}', { eager: true, import: 'default' });
+const photos2023 = import.meta.glob('/src/assets/photos/2023/*.{png,jpg,jpeg,svg,webp}', { eager: true, import: 'default' });
+const photos2024 = import.meta.glob('/src/assets/photos/2024/*.{png,jpg,jpeg,svg,webp}', { eager: true, import: 'default' });
+const photos2025 = import.meta.glob('/src/assets/photos/2025/*.{png,jpg,jpeg,svg,webp}', { eager: true, import: 'default' });
+const photos2026 = import.meta.glob('/src/assets/photos/2026/*.{png,jpg,jpeg,svg,webp}', { eager: true, import: 'default' });
 
 const photoCollections = {
     2023: Object.values(photos2023),

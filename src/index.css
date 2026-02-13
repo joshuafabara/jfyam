@@ -34,7 +34,7 @@
 }
 
 .scanline {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -100,6 +100,27 @@
 
 .animate-bounce-slow {
   animation: bounceSlow 3s infinite ease-in-out;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.animate-float-slow {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-slow-delay {
+  animation: float 6s ease-in-out infinite;
+  animation-delay: 3s;
 }
 
 .text-neon-pink {
