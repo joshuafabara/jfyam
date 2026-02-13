@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getRandomVerse } from '../data/bibleVerses';
 import type { BibleVerse } from '../data/bibleVerses';
 
@@ -35,9 +35,22 @@ export const PhotoGallery = ({ year, onNext }: PhotoGalleryProps) => {
         setVerse(null);
     };
 
+    // Handle ESC key
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        };
+        if (selectedPhoto) {
+            window.addEventListener('keydown', handleKeyDown);
+        }
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [selectedPhoto]);
+
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-black/90 text-center animate-fade-in z-50 overflow-y-auto">
-            <h2 className="text-3xl md:text-5xl text-neon-green mb-8 font-press-start glitch-text">
+        <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-slate-100/95 dark:bg-black/90 text-center animate-fade-in z-50 overflow-y-auto transition-colors duration-300">
+            <h2 className="text-3xl md:text-5xl text-green-700 dark:text-neon-green mb-8 font-press-start glitch-text">
                 LEVEL {year} COMPLETE!
             </h2>
 
@@ -45,20 +58,20 @@ export const PhotoGallery = ({ year, onNext }: PhotoGalleryProps) => {
                 {photos.map((photo, index) => (
                     <div
                         key={index}
-                        className="mb-4 break-inside-avoid cursor-pointer hover:scale-105 transition-transform duration-300 border-2 border-neon-pink/50 rounded-lg overflow-hidden shadow-[0_0_15px_rgba(255,0,128,0.3)]"
+                        className="mb-4 break-inside-avoid cursor-pointer hover:scale-105 transition-transform duration-300 border-2 border-pink-500/50 dark:border-neon-pink/50 rounded-lg overflow-hidden shadow-lg dark:shadow-[0_0_15px_rgba(255,0,128,0.3)] bg-white dark:bg-black"
                         onClick={() => handlePhotoClick(photo as string)}
                     >
                         <img src={photo as string} alt={`Memory from ${year}`} className="w-full h-auto object-cover" />
                     </div>
                 ))}
                 {photos.length === 0 && (
-                    <div className="text-white">No photos found for {year}. Add images to src/assets/photos/{year}/</div>
+                    <div className="text-slate-900 dark:text-white">No photos found for {year}. Add images to src/assets/photos/{year}/</div>
                 )}
             </div>
 
             <button
                 onClick={onNext}
-                className="mt-12 px-8 py-4 bg-neon-pink text-white font-press-start text-xl hover:bg-white hover:text-neon-pink transition-colors border-2 border-transparent hover:border-neon-pink animate-pulse"
+                className="mt-12 px-8 py-4 bg-pink-600 dark:bg-neon-pink text-white font-press-start text-xl hover:bg-pink-700 hover:text-white dark:hover:bg-white dark:hover:text-neon-pink transition-colors border-2 border-transparent hover:border-pink-600 dark:hover:border-neon-pink animate-pulse"
             >
                 NEXT LEVEL →
             </button>
@@ -66,29 +79,33 @@ export const PhotoGallery = ({ year, onNext }: PhotoGalleryProps) => {
             {/* Lightbox */}
             {selectedPhoto && (
                 <div
-                    className="fixed inset-0 bg-black/95 z-[100] flex flex-col items-center justify-center p-4 animate-fade-in"
+                    className="fixed inset-0 bg-slate-50/95 dark:bg-black/95 z-[100] flex flex-col items-center justify-center p-4 animate-fade-in"
                     onClick={closeLightbox}
                 >
                     <img
                         src={selectedPhoto}
                         alt="Expanded memory"
-                        className="max-h-[60vh] max-w-full rounded-lg border-4 border-white shadow-[0_0_30px_rgba(255,255,255,0.2)]"
+                        className="max-h-[60vh] max-w-full rounded-lg border-4 border-slate-900 dark:border-white shadow-2xl dark:shadow-[0_0_30px_rgba(255,255,255,0.2)]"
                         onClick={(e) => e.stopPropagation()}
                     />
 
                     {verse && (
-                        <div className="mt-8 max-w-2xl text-center bg-black/50 p-6 rounded-xl border border-white/20 backdrop-blur-sm" onClick={(e) => e.stopPropagation()}>
-                            <p className="text-xl md:text-2xl text-white italic font-serif mb-4 leading-relaxed">"{verse.text}"</p>
-                            <p className="text-neon-cyan font-press-start text-sm">— {verse.reference}</p>
+                        <div className="mt-8 max-w-2xl text-center bg-white/80 dark:bg-black/50 p-6 rounded-xl border border-slate-200 dark:border-white/20 backdrop-blur-sm shadow-xl" onClick={(e) => e.stopPropagation()}>
+                            <p className="text-xl md:text-2xl text-slate-800 dark:text-white italic font-serif mb-4 leading-relaxed">"{verse.text}"</p>
+                            <p className="text-blue-600 dark:text-neon-cyan font-press-start text-sm">— {verse.reference}</p>
                         </div>
                     )}
 
                     <button
-                        className="absolute top-4 right-4 text-white text-4xl hover:text-neon-pink"
+                        className="absolute top-4 right-4 text-slate-900 dark:text-white text-4xl hover:text-pink-600 dark:hover:text-neon-pink"
                         onClick={closeLightbox}
                     >
                         &times;
                     </button>
+
+                    <div className="absolute bottom-4 text-slate-500 dark:text-white/50 font-press-start text-xs">
+                        PRESS ESC TO CLOSE
+                    </div>
                 </div>
             )}
         </div>

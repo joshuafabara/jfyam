@@ -1,10 +1,10 @@
 export const StartScreen = ({ onStart }: { onStart: () => void }) => {
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-black text-center z-10 relative">
-            <h1 className="text-5xl md:text-7xl text-neon-pink font-press-start mb-4 animate-pulse shadow-neon-pink">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-slate-50 dark:bg-black text-center z-10 relative transition-colors duration-300">
+            <h1 className="text-5xl md:text-7xl text-pink-600 dark:text-neon-pink font-press-start mb-4 animate-pulse dark:shadow-neon-pink">
                 LOVE INVADERS
             </h1>
-            <p className="text-neon-green text-sm md:text-xl font-press-start mb-12">
+            <p className="text-green-700 dark:text-neon-green text-sm md:text-xl font-press-start mb-12">
                 Joshua & Amel vs The World
             </p>
 
@@ -14,17 +14,17 @@ export const StartScreen = ({ onStart }: { onStart: () => void }) => {
                     <rect x="46" y="25" width="8" height="24" fill="white" />
                     <rect x="38" y="33" width="24" height="8" fill="white" />
                 </svg>
-                <div className="absolute inset-0 bg-neon-pink blur-xl opacity-30 -z-10 rounded-full"></div>
+                <div className="absolute inset-0 bg-pink-500 dark:bg-neon-pink blur-xl opacity-30 -z-10 rounded-full"></div>
             </div>
 
             <button
                 onClick={onStart}
-                className="px-8 py-4 bg-transparent border-4 border-neon-cyan text-neon-cyan font-press-start text-xl hover:bg-neon-cyan hover:text-black transition-all duration-300 animate-blink"
+                className="px-8 py-4 bg-transparent border-4 border-blue-600 dark:border-neon-cyan text-blue-600 dark:text-neon-cyan font-press-start text-xl hover:bg-blue-600 hover:text-white dark:hover:bg-neon-cyan dark:hover:text-black transition-all duration-300 animate-blink"
             >
                 PRESS START
             </button>
 
-            <div className="absolute bottom-8 flex justify-between w-full px-8 text-white/50 text-xs font-press-start">
+            <div className="absolute bottom-8 flex justify-between w-full px-8 text-slate-500 dark:text-white/50 text-xs font-press-start">
                 <span>2023 - 2026</span>
                 <span>4 YEARS</span>
             </div>

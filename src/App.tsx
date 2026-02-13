@@ -12,7 +12,7 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="fixed top-4 right-4 z-[100] bg-white/10 p-2 rounded-full border border-white/30 backdrop-blur-md hover:bg-white/20 transition-all font-sans text-xs"
+      className="fixed top-4 left-4 z-[100] bg-white/10 dark:bg-white/10 p-2 rounded-full border border-black/10 dark:border-white/30 backdrop-blur-md hover:bg-black/5 dark:hover:bg-white/20 transition-all font-sans text-xs text-black dark:text-white shadow-md"
     >
       {theme === 'dark' ? '🌙' : '☀️'}
     </button>
@@ -50,7 +50,7 @@ function App() {
 
   return (
     <ThemeProvider>
-      <div className="min-h-screen bg-black text-white font-press-start select-none overflow-hidden">
+      <div className="min-h-screen bg-slate-50 dark:bg-black text-slate-900 dark:text-white font-press-start select-none overflow-hidden transition-colors duration-300">
         <ThemeToggle />
 
         {gameState === 'START' && (

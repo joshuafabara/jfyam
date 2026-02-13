@@ -8,6 +8,14 @@ import { GameOverScreen } from './GameOverScreen';
 import arrowLeft from '../assets/arrow-left.svg';
 import arrowRight from '../assets/arrow-right.svg';
 
+// Load background images
+const bgImages = import.meta.glob('/src/assets/photos/backgrounds/*/*.{png,jpg,jpeg,svg,webp}', { eager: true, import: 'default' });
+
+const getBackgroundForYear = (year: number): string | undefined => {
+    const key = Object.keys(bgImages).find(k => k.includes(`/${year}/`));
+    return key ? (bgImages[key] as string) : undefined;
+};
+
 interface GameCanvasProps {
     levelIndex: number;
     initialScore: number;
@@ -37,6 +45,10 @@ export const GameCanvas = ({ levelIndex, initialScore, onWin }: GameCanvasProps)
     const [timeLeft, setTimeLeft] = useState(30);
     const [isGameOver, setIsGameOver] = useState(false);
     const [showLevelIntro, setShowLevelIntro] = useState(true);
+
+    // Background
+    const currentYear = levelRef.current.year;
+    const bgImage = getBackgroundForYear(currentYear);
 
     // Input State
     const keysPressed = useRef<Record<string, boolean>>({});
@@ -133,7 +145,6 @@ export const GameCanvas = ({ levelIndex, initialScore, onWin }: GameCanvasProps)
                         createExplosion(invader.x, invader.y, '#00ff00');
                         scoreRef.current += 100;
                         setScore(scoreRef.current);
-                        // onScoreUpdate call removed to prevent re-render
                     }
                 });
             }
@@ -252,30 +263,43 @@ export const GameCanvas = ({ levelIndex, initialScore, onWin }: GameCanvasProps)
     const handleTouchFire = () => { fireBullet(); };
 
     return (
-        <div className="relative w-full h-full flex flex-col items-center justify-center bg-black overflow-hidden touch-none">
+        <div
+            className="relative w-full h-full flex flex-col items-center justify-center bg-white dark:bg-black overflow-hidden touch-none transition-colors duration-300"
+            style={{
+                backgroundImage: bgImage ? `url(${bgImage})` : undefined,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'repeat' // User requested repeat, though cover overrides it usually. Maybe they have seamless textures.
+            }}
+        >
+            {/* Overlay for contrast if background is present */}
+            {bgImage && (
+                <div className="absolute inset-0 bg-white/60 dark:bg-black/60 pointer-events-none z-0"></div>
+            )}
+
             {/* HUD */}
-            <div className="absolute top-0 w-full max-w-[800px] flex justify-between p-4 font-press-start text-neon-green z-20 pointer-events-none">
+            <div className="absolute top-0 w-full max-w-[800px] flex justify-between p-4 font-press-start text-green-700 dark:text-neon-green z-20 pointer-events-none">
                 <div>SCORE: {score.toString().padStart(4, '0')}</div>
                 <div>LEVEL: {levelRef.current.year}</div>
                 <div>LIVES: {'♥'.repeat(lives)}</div>
             </div>
 
             {/* Timer */}
-            <div className="absolute top-12 text-white font-press-start z-20 pointer-events-none">
+            <div className="absolute top-12 text-slate-900 dark:text-white font-press-start z-20 pointer-events-none">
                 TIME: {timeLeft}
             </div>
 
-            <div className="relative border-4 border-neon-cyan/30 rounded-lg shadow-[0_0_20px_rgba(0,255,255,0.2)]">
+            <div className="relative border-4 border-cyan-400/30 dark:border-neon-cyan/30 rounded-lg shadow-lg dark:shadow-[0_0_20px_rgba(0,255,255,0.2)] z-10">
                 <canvas
                     ref={canvasRef}
                     style={{ width: GAME_WIDTH, height: GAME_HEIGHT, maxWidth: '100vw', maxHeight: '80vh' }}
                     className="block"
                 />
-                <div className="scanline crt-effect absolute inset-0 pointer-events-none"></div>
+                <div className="scanline crt-effect absolute inset-0 pointer-events-none opacity-50 dark:opacity-100"></div>
 
                 {showLevelIntro && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-30">
-                        <h2 className="text-4xl text-neon-green font-press-start animate-pulse">
+                    <div className="absolute inset-0 flex items-center justify-center bg-white/80 dark:bg-black/80 z-30">
+                        <h2 className="text-4xl text-green-700 dark:text-neon-green font-press-start animate-pulse">
                             LEVEL {levelRef.current.year}
                         </h2>
                     </div>
@@ -289,7 +313,7 @@ export const GameCanvas = ({ levelIndex, initialScore, onWin }: GameCanvasProps)
             {/* Mobile Controls */}
             <div className="flex w-full justify-between items-center px-8 py-4 md:hidden mt-4 gap-4 z-40">
                 <button
-                    className="w-16 h-16 bg-gray-800 rounded-full active:bg-neon-cyan flex items-center justify-center select-none touch-manipulation border-2 border-white/20"
+                    className="w-16 h-16 bg-gray-200 dark:bg-gray-800 rounded-full active:bg-cyan-200 dark:active:bg-neon-cyan flex items-center justify-center select-none touch-manipulation border-2 border-slate-300 dark:border-white/20"
                     onTouchStart={handleTouchLeft}
                     onMouseDown={handleTouchLeft}
                 >
@@ -303,14 +327,14 @@ export const GameCanvas = ({ levelIndex, initialScore, onWin }: GameCanvasProps)
                     FIRE
                 </button>
                 <button
-                    className="w-16 h-16 bg-gray-800 rounded-full active:bg-neon-cyan flex items-center justify-center select-none touch-manipulation border-2 border-white/20"
+                    className="w-16 h-16 bg-gray-200 dark:bg-gray-800 rounded-full active:bg-cyan-200 dark:active:bg-neon-cyan flex items-center justify-center select-none touch-manipulation border-2 border-slate-300 dark:border-white/20"
                     onTouchStart={handleTouchRight}
                     onMouseDown={handleTouchRight}
                 >
                     <img src={arrowRight} alt="Right" className="w-8 h-8" />
                 </button>
             </div>
-            <div className="hidden md:block mt-2 text-gray-500 font-press-start text-xs">
+            <div className="hidden md:block mt-2 text-slate-500 dark:text-gray-500 font-press-start text-xs z-10 font-bold bg-white/50 dark:bg-black/50 p-2 rounded">
                 ARROWS TO MOVE • SPACE TO SHOOT
             </div>
         </div>
