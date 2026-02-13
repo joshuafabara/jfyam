@@ -62,7 +62,6 @@ function App() {
             levelIndex={levelIndex}
             initialScore={score}
             onWin={handleLevelWin}
-            onScoreUpdate={setScore}
           />
         )}
 

@@ -12,10 +12,9 @@ interface GameCanvasProps {
     levelIndex: number;
     initialScore: number;
     onWin: (finalScore: number) => void;
-    onScoreUpdate: (score: number) => void;
 }
 
-export const GameCanvas = ({ levelIndex, initialScore, onWin, onScoreUpdate }: GameCanvasProps) => {
+export const GameCanvas = ({ levelIndex, initialScore, onWin }: GameCanvasProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const { theme } = useTheme();
 
@@ -134,7 +133,7 @@ export const GameCanvas = ({ levelIndex, initialScore, onWin, onScoreUpdate }: G
                         createExplosion(invader.x, invader.y, '#00ff00');
                         scoreRef.current += 100;
                         setScore(scoreRef.current);
-                        onScoreUpdate(scoreRef.current);
+                        // onScoreUpdate call removed to prevent re-render
                     }
                 });
             }
