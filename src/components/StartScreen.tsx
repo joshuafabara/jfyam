@@ -7,7 +7,7 @@ const CRAWL_TEXT = `Love Invaders es una historia casi real, te enfrentarás ver
 
 const StarWarsCrawl = ({ onClose }: { onClose: () => void }) => {
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-    const scrollRef = useRef(isMobile ? -window.innerHeight * 0.95 : -window.innerHeight);
+    const scrollRef = useRef(isMobile ? -window.innerHeight * 1.05 : -window.innerHeight);
     const autoSpeed = useRef(isMobile ? 0.8 : 0.5); // faster on mobile
     const containerRef = useRef<HTMLDivElement>(null);
     const textRef = useRef<HTMLDivElement>(null);
