@@ -268,18 +268,14 @@ export const GameCanvas = ({ levelIndex, initialScore, onWin }: GameCanvasProps)
         return () => clearTimeout(timeout);
     }, [initLevel]);
 
-    // Touch Controls
-    const handleTouchLeft = (e: React.TouchEvent | React.MouseEvent) => {
-        if (e.cancelable && e.type.startsWith('touch')) e.preventDefault();
-        playerRef.current.moveLeft();
+    // Touch Controls — set keysPressed so the game loop handles continuous input
+    const holdKey = (key: string, e: React.TouchEvent | React.MouseEvent) => {
+        if (e.cancelable) e.preventDefault();
+        keysPressed.current[key] = true;
     };
-    const handleTouchRight = (e: React.TouchEvent | React.MouseEvent) => {
-        if (e.cancelable && e.type.startsWith('touch')) e.preventDefault();
-        playerRef.current.moveRight();
-    };
-    const handleTouchFire = (e: React.TouchEvent | React.MouseEvent) => {
-        if (e.cancelable && e.type.startsWith('touch')) e.preventDefault();
-        fireBullet();
+    const releaseKey = (key: string, e: React.TouchEvent | React.MouseEvent) => {
+        if (e.cancelable) e.preventDefault();
+        keysPressed.current[key] = false;
     };
 
     return (
@@ -344,24 +340,36 @@ export const GameCanvas = ({ levelIndex, initialScore, onWin }: GameCanvasProps)
             <div className="flex w-full justify-between items-center px-8 py-4 md:hidden mt-4 gap-4 z-40">
                 <button
                     className="w-16 h-16 bg-gray-200 dark:bg-gray-800 rounded-full active:bg-cyan-200 dark:active:bg-neon-cyan flex items-center justify-center select-none touch-manipulation border-2 border-slate-300 dark:border-white/20"
-                    onTouchStart={handleTouchLeft}
-                    onMouseDown={handleTouchLeft}
+                    onTouchStart={(e) => holdKey('ArrowLeft', e)}
+                    onTouchEnd={(e) => releaseKey('ArrowLeft', e)}
+                    onTouchCancel={(e) => releaseKey('ArrowLeft', e)}
+                    onMouseDown={(e) => holdKey('ArrowLeft', e)}
+                    onMouseUp={(e) => releaseKey('ArrowLeft', e)}
+                    onMouseLeave={(e) => releaseKey('ArrowLeft', e)}
                 >
-                    <img src={arrowLeft} alt="Left" className="w-8 h-8" />
+                    <img src={arrowLeft} alt="Left" className="w-8 h-8 pointer-events-none" />
                 </button>
                 <button
                     className="w-20 h-20 bg-red-600 rounded-full active:bg-red-400 flex items-center justify-center text-white font-bold select-none touch-manipulation border-4 border-red-800 shadow-lg"
-                    onTouchStart={handleTouchFire}
-                    onClick={handleTouchFire}
+                    onTouchStart={(e) => holdKey('Space', e)}
+                    onTouchEnd={(e) => releaseKey('Space', e)}
+                    onTouchCancel={(e) => releaseKey('Space', e)}
+                    onMouseDown={(e) => holdKey('Space', e)}
+                    onMouseUp={(e) => releaseKey('Space', e)}
+                    onMouseLeave={(e) => releaseKey('Space', e)}
                 >
                     FIRE
                 </button>
                 <button
                     className="w-16 h-16 bg-gray-200 dark:bg-gray-800 rounded-full active:bg-cyan-200 dark:active:bg-neon-cyan flex items-center justify-center select-none touch-manipulation border-2 border-slate-300 dark:border-white/20"
-                    onTouchStart={handleTouchRight}
-                    onMouseDown={handleTouchRight}
+                    onTouchStart={(e) => holdKey('ArrowRight', e)}
+                    onTouchEnd={(e) => releaseKey('ArrowRight', e)}
+                    onTouchCancel={(e) => releaseKey('ArrowRight', e)}
+                    onMouseDown={(e) => holdKey('ArrowRight', e)}
+                    onMouseUp={(e) => releaseKey('ArrowRight', e)}
+                    onMouseLeave={(e) => releaseKey('ArrowRight', e)}
                 >
-                    <img src={arrowRight} alt="Right" className="w-8 h-8" />
+                    <img src={arrowRight} alt="Right" className="w-8 h-8 pointer-events-none" />
                 </button>
             </div>
             <div className="hidden md:block mt-2 text-slate-500 dark:text-gray-500 font-press-start text-xs z-10 font-bold bg-white/50 dark:bg-black/50 p-2 rounded">
