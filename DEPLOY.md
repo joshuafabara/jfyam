@@ -43,3 +43,4 @@ Recommended if you want automatic updates whenever you save changes.
     -   Click **Deploy**.
 
 Vercel will detect it's a Vite app and handle everything automatically.
+Deployed to Vercel at: https://jfyam14.vercel.app/ 
