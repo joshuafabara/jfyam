@@ -1,5 +1,5 @@
 import { Player, Invader, Bullet, Particle } from './entities';
-import { GAME_WIDTH, GAME_HEIGHT, PLAYER_SIZE, INVADER_SIZE, BULLET_SIZE } from './config';
+import { GAME_WIDTH, GAME_HEIGHT, BULLET_SIZE } from './config';
 
 export class GameRenderer {
     ctx: CanvasRenderingContext2D;
@@ -35,7 +35,7 @@ export class GameRenderer {
     }
 
     drawInvader(invader: Invader) {
-        const { x, y, width, height } = invader;
+        const { x, y, width } = invader;
         // Retro alien sprite (simplified 8x8 grid style)
         this.ctx.fillStyle = this.theme === 'dark' ? '#00ffaa' : '#00aa55'; // Neon green or dark green
 

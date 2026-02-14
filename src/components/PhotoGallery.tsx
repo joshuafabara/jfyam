@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { getRandomVerseIndex, getVerseByIndex } from '../data/bibleVerses';
-import type { BibleVerse } from '../data/bibleVerses';
 import { useLanguage } from '../context/LanguageContext';
 
 const photos2023 = import.meta.glob('/src/assets/photos/2023/*.{png,jpg,jpeg,svg,webp,PNG,JPG,JPEG,SVG,WEBP}', { eager: true, import: 'default' });

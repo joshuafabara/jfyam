@@ -1,4 +1,4 @@
-import { GAME_WIDTH, GAME_HEIGHT, PLAYER_SIZE, INVADER_SIZE, BULLET_SIZE, PLAYER_SPEED, BULLET_SPEED } from './config';
+import { GAME_WIDTH, GAME_HEIGHT, PLAYER_SIZE, INVADER_SIZE, BULLET_SIZE, PLAYER_SPEED } from './config';
 
 export class Entity {
     x: number;
