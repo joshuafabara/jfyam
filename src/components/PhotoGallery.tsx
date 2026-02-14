@@ -53,7 +53,7 @@ export const PhotoGallery = ({ year, onNext }: PhotoGalleryProps) => {
     const verse = verseIndex !== null ? getVerseByIndex(verseIndex, language) : null;
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-slate-100/95 dark:bg-black/90 text-center animate-fade-in z-50 overflow-y-auto transition-colors duration-300">
+        <div className="fixed inset-0 flex flex-col items-center p-4 pt-16 bg-slate-100/95 dark:bg-black/90 text-center animate-fade-in z-50 overflow-y-auto transition-colors duration-300">
             <h2 className="text-3xl md:text-5xl text-green-700 dark:text-neon-green mb-8 font-press-start glitch-text">
                 LEVEL {year} COMPLETE!
             </h2>

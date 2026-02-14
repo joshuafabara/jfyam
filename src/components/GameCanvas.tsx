@@ -284,7 +284,7 @@ export const GameCanvas = ({ levelIndex, initialScore, onWin }: GameCanvasProps)
 
     return (
         <div
-            className="relative w-full h-full flex flex-col items-center justify-center bg-white dark:bg-black overflow-hidden touch-none transition-colors duration-300"
+            className="fixed inset-0 flex flex-col items-center justify-center bg-white dark:bg-black overflow-hidden touch-none transition-colors duration-300"
             style={{
                 backgroundImage: bgImage ? `url(${bgImage})` : undefined,
                 backgroundSize: 'cover',

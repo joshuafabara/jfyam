@@ -17,6 +17,12 @@
   }
 }
 
+html, body {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
 :root {
   font-family: var(--font-press-start);
   background-color: #0a0a1a;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { GameCanvas } from './components/GameCanvas';
 import { StartScreen } from './components/StartScreen';
 import { PhotoGallery } from './components/PhotoGallery';
@@ -68,6 +68,11 @@ function App() {
   };
 
   const currentYear = LEVELS[levelIndex]?.year || 2023;
+
+  // Reset scroll position on every state change (fixes mobile Safari scroll persistence)
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [gameState]);
 
   return (
     <LanguageProvider>
