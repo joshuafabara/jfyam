@@ -5,7 +5,9 @@ export const ToBeContinued = () => {
                 TO BE CONTINUED...
             </h1>
             <p className="text-slate-500 dark:text-white/50 text-sm font-press-start mt-8">
-                Our adventure is just beginning
+                ¿ Quieres seguir juntos para el siguiente nivel ?
+                <br />
+                Postdata: Gracias por no rendirte 💪🏽❤️👾
             </p>
         </div>
     );
