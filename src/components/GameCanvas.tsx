@@ -304,10 +304,20 @@ export const GameCanvas = ({ levelIndex, initialScore, onWin }: GameCanvasProps)
                 <div>LIVES: {'♥'.repeat(lives)}</div>
             </div>
 
-            {/* Timer */}
-            <div className={`absolute top-12 text-slate-900 dark:text-white font-press-start z-20 pointer-events-none ${timeLeft <= 10 ? 'animate-pulse text-red-500 dark:text-red-500' : ''}`}>
-                TIME: {timeLeft}
-            </div>
+            {/* Timer — green when enough invaders killed to pass, red otherwise */}
+            {(() => {
+                const killed = (score - initialScore) / 100;
+                const isPassing = totalInvadersRef.current > 0 && (killed / totalInvadersRef.current) >= 0.90;
+                return (
+                    <div className={`absolute top-12 font-press-start z-20 pointer-events-none transition-colors duration-300 ${
+                        isPassing
+                            ? 'text-green-500 dark:text-green-400 text-base'
+                            : 'text-red-500 dark:text-red-400 text-xl animate-pulse'
+                    }`}>
+                        TIME: {timeLeft}
+                    </div>
+                );
+            })()}
 
             <div className="relative border-4 border-cyan-400/30 dark:border-neon-cyan/30 rounded-lg shadow-lg dark:shadow-[0_0_20px_rgba(0,255,255,0.2)] z-10">
                 <canvas
