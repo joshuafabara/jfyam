@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getRandomVerseIndex, getVerseByIndex } from '../data/bibleVerses';
 import { useLanguage } from '../context/LanguageContext';
+import { LazyImage } from './LazyImage';
 
 const photos2023 = import.meta.glob('/src/assets/photos/2023/*.{png,jpg,jpeg,svg,webp,PNG,JPG,JPEG,SVG,WEBP}', { eager: true, import: 'default' });
 const photos2024 = import.meta.glob('/src/assets/photos/2024/*.{png,jpg,jpeg,svg,webp,PNG,JPG,JPEG,SVG,WEBP}', { eager: true, import: 'default' });
@@ -59,13 +60,13 @@ export const PhotoGallery = ({ year, onNext }: PhotoGalleryProps) => {
 
             <div className="columns-1 md:columns-2 lg:columns-3 gap-4 w-full max-w-5xl">
                 {photos.map((photo, index) => (
-                    <div
+                    <LazyImage
                         key={index}
-                        className="mb-4 break-inside-avoid cursor-pointer hover:scale-105 transition-transform duration-300 border-2 border-pink-500/50 dark:border-neon-pink/50 rounded-lg overflow-hidden shadow-lg dark:shadow-[0_0_15px_rgba(255,0,128,0.3)] bg-white dark:bg-black"
+                        src={photo as string}
+                        alt={`Memory ${index} from ${year}`}
+                        index={index}
                         onClick={() => handlePhotoClick(photo as string)}
-                    >
-                        <img src={photo as string} alt={`Memory from ${year}`} className="w-full h-auto object-cover" />
-                    </div>
+                    />
                 ))}
                 {photos.length === 0 && (
                     <div className="text-slate-900 dark:text-white">No photos found for {year}. Add images to src/assets/photos/{year}/</div>
