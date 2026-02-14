@@ -29,6 +29,7 @@ export const GameCanvas = ({ levelIndex, initialScore, onWin }: GameCanvasProps)
     // Game State Refs (mutable for game loop)
     const playerRef = useRef<Player>(new Player());
     const invadersRef = useRef<Invader[]>([]);
+    const totalInvadersRef = useRef<number>(0); // Track total initial invaders
     const bulletsRef = useRef<Bullet[]>([]);
     const particlesRef = useRef<Particle[]>([]);
     const scoreRef = useRef(initialScore);
@@ -79,6 +80,7 @@ export const GameCanvas = ({ levelIndex, initialScore, onWin }: GameCanvasProps)
             }
         }
         invadersRef.current = newInvaders;
+        totalInvadersRef.current = newInvaders.length; // Store initial count
     }, [levelIndex, initialScore]);
 
     // Handle Input
@@ -241,7 +243,16 @@ export const GameCanvas = ({ levelIndex, initialScore, onWin }: GameCanvasProps)
         const timer = setInterval(() => {
             setTimeLeft(prev => {
                 if (prev <= 1) {
-                    handleWin();
+                    // Time is up! Check win condition
+                    const remainingInvaders = invadersRef.current.length;
+                    const totalInvaders = totalInvadersRef.current;
+
+                    // If more than 10% invaders are alive, level is lost
+                    if (remainingInvaders / totalInvaders > 0.10) {
+                        handleGameOver();
+                    } else {
+                        handleWin();
+                    }
                     return 0;
                 }
                 return prev - 1;
@@ -285,7 +296,7 @@ export const GameCanvas = ({ levelIndex, initialScore, onWin }: GameCanvasProps)
             </div>
 
             {/* Timer */}
-            <div className="absolute top-12 text-slate-900 dark:text-white font-press-start z-20 pointer-events-none">
+            <div className={`absolute top-12 text-slate-900 dark:text-white font-press-start z-20 pointer-events-none ${timeLeft <= 10 ? 'animate-pulse text-red-500 dark:text-red-500' : ''}`}>
                 TIME: {timeLeft}
             </div>
 

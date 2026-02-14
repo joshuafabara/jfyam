@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { getRandomVerse } from '../data/bibleVerses';
+import { getRandomVerseIndex, getVerseByIndex } from '../data/bibleVerses';
 import type { BibleVerse } from '../data/bibleVerses';
+import { useLanguage } from '../context/LanguageContext';
 
 const photos2023 = import.meta.glob('/src/assets/photos/2023/*.{png,jpg,jpeg,svg,webp,PNG,JPG,JPEG,SVG,WEBP}', { eager: true, import: 'default' });
 const photos2024 = import.meta.glob('/src/assets/photos/2024/*.{png,jpg,jpeg,svg,webp,PNG,JPG,JPEG,SVG,WEBP}', { eager: true, import: 'default' });
@@ -21,18 +22,19 @@ interface PhotoGalleryProps {
 
 export const PhotoGallery = ({ year, onNext }: PhotoGalleryProps) => {
     const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
-    const [verse, setVerse] = useState<BibleVerse | null>(null);
+    const [verseIndex, setVerseIndex] = useState<number | null>(null);
+    const { language } = useLanguage();
 
     const photos = photoCollections[year as keyof typeof photoCollections] || [];
 
     const handlePhotoClick = (photo: string) => {
         setSelectedPhoto(photo);
-        setVerse(getRandomVerse());
+        setVerseIndex(getRandomVerseIndex());
     };
 
     const closeLightbox = () => {
         setSelectedPhoto(null);
-        setVerse(null);
+        setVerseIndex(null);
     };
 
     // Handle ESC key
@@ -47,6 +49,8 @@ export const PhotoGallery = ({ year, onNext }: PhotoGalleryProps) => {
         }
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [selectedPhoto]);
+
+    const verse = verseIndex !== null ? getVerseByIndex(verseIndex, language) : null;
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-slate-100/95 dark:bg-black/90 text-center animate-fade-in z-50 overflow-y-auto transition-colors duration-300">
