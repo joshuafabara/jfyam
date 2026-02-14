@@ -3,11 +3,12 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import joshuaImg from '../assets/photos/backgrounds/intro/joshua.png';
 import amelImg from '../assets/photos/backgrounds/intro/amel.png';
 
-const CRAWL_TEXT = `Love Invaders es una historia casi real, te enfrentarás versus invasores que quieren dañar y manchar el amor, y si no logras combatirlos a tiempo eliminando al menos al 80% de ellos el timer en rojo te dirá que el amor corre peligro de morir pero tranqui siempre hay una nueva oportunidad, persistirás hasta lograr que el amor gane o dejarás que los invasores lo destruyan, el uno se tiene al otro y en el centro a Cristo... Tienes todo lo que necesitas ?... Vamos a jugar 👾❤️💪🏽`;
+const CRAWL_TEXT = `Love Invaders es una historia casi real, te enfrentarás versus invasores que quieren dañar y manchar el amor, y si no logras combatirlos a tiempo eliminando al menos al 80% de ellos el timer en rojo te dirá que el amor corre peligro de morir pero tranqui siempre hay una nueva oportunidad, persistirás hasta lograr que el amor gane o dejarás que los invasores lo destruyan, el uno se tiene al otro y en el centro a Cristo... \n\nTienes todo lo que necesitas ?...\n\nVamos a jugar 👾❤️💪🏽`;
 
 const StarWarsCrawl = ({ onClose }: { onClose: () => void }) => {
-    const scrollRef = useRef(0);
-    const autoSpeed = useRef(0.5); // pixels per frame
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const scrollRef = useRef(isMobile ? -window.innerHeight * 0.6 : -window.innerHeight);
+    const autoSpeed = useRef(isMobile ? 0.8 : 0.5); // faster on mobile
     const containerRef = useRef<HTMLDivElement>(null);
     const textRef = useRef<HTMLDivElement>(null);
     const rafRef = useRef<number>(0);
@@ -102,7 +103,7 @@ const StarWarsCrawl = ({ onClose }: { onClose: () => void }) => {
             {/* Perspective container */}
             <div
                 className="w-full h-full flex items-end justify-center"
-                style={{ perspective: '350px' }}
+                style={{ perspective: '150px' }}
             >
                 <div
                     className="w-full max-w-2xl text-center px-6 pb-0"
@@ -114,10 +115,9 @@ const StarWarsCrawl = ({ onClose }: { onClose: () => void }) => {
                     {/* Scrolling text */}
                     <div
                         ref={textRef}
-                        className="font-serif italic text-yellow-400 text-lg md:text-2xl leading-relaxed"
-                        style={{ paddingTop: '100vh' }}
+                        className="font-serif italic text-yellow-400 text-2xl md:text-4xl leading-loose md:leading-relaxed"
                     >
-                        <h2 className="font-press-start text-2xl md:text-4xl not-italic mb-12 text-yellow-300">
+                        <h2 className="font-press-start text-3xl md:text-5xl not-italic mb-12 text-yellow-300">
                             LOVE INVADERS
                         </h2>
                         <p className="mb-8">{CRAWL_TEXT}</p>
