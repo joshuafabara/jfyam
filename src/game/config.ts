@@ -1,7 +1,7 @@
 const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 const SPEED_MULTIPLIER = isMobile ? 1.5 : 1;
-const INVADER_SPEED_MULTIPLIER = isMobile ? 5 : 1;
-const SHOOT_RATE_MULTIPLIER = isMobile ? 8 : 1;
+const INVADER_SPEED_MULTIPLIER = isMobile ? 4 : 1;
+const SHOOT_RATE_MULTIPLIER = isMobile ? 6 : 1;
 
 export const GAME_WIDTH = 800;
 export const GAME_HEIGHT = 600;
