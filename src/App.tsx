@@ -21,19 +21,27 @@ const ZoomResetButton = () => {
   }, []);
 
   const resetZoom = useCallback(() => {
-    // Force viewport reset by toggling the meta tag
     const meta = document.querySelector('meta[name="viewport"]');
-    if (meta) {
-      meta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-      // Brief toggle to force Safari to re-evaluate
+    if (!meta) return;
+
+    // Step 1: unlock zoom completely so Safari releases its current zoom level
+    meta.setAttribute('content', 'width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0, user-scalable=yes');
+
+    // Step 2: after Safari processes, force a focus trick to reset visual viewport
+    setTimeout(() => {
+      const input = document.createElement('input');
+      input.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;font-size:16px;z-index:-1;';
+      document.body.appendChild(input);
+      input.focus();
+
       setTimeout(() => {
-        meta.setAttribute('content', 'width=device-width, initial-scale=0.99, maximum-scale=1.0, user-scalable=no');
-        setTimeout(() => {
-          meta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-        }, 50);
-      }, 50);
-    }
-    setZoomed(false);
+        input.blur();
+        document.body.removeChild(input);
+        // Step 3: lock zoom back down
+        meta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+        setZoomed(false);
+      }, 150);
+    }, 150);
   }, []);
 
   if (!zoomed) return null;
