@@ -14,9 +14,9 @@ const photoCollections = {
 };
 
 const TRANSITION_TEXTS: Record<number, string> = {
-    2023: "Porque el primer nivel es el 2023? Porque fue ese el nivel donde fue nuestro primer valentín ya viviendo bajo el mismo techo y siendo mas UNO que antes...",
-    2024: "2024, las cosas van en ascenso tanto lo bueno como los \"invaders\" u obstáculos, pero creo que a pesar de todo podemos ver más bendiciones que cosas malas, la lucha continua...",
-    2025: "2025... seguimos luchando y soñando juntos, hemos visto grandes frutos de la perseverancia de ambos en esta relación y tu compañía cada vez me hace más y más fuerte, te amo cada día un poquito mas...",
+    2023: "¿Por qué el primer nivel es el 2023? Porque fue ese el nivel donde fue nuestro primer valentín ya viviendo bajo el mismo techo y siendo mas UNO que antes...",
+    2024: "2024, las cosas van en ascenso tanto lo bueno como los \"invaders\" u obstáculos, pero creo que a pesar de todo podemos ver más bendiciones que cosas malas, la lucha continúa...",
+    2025: "2025... seguimos luchando y soñando juntos, hemos visto grandes frutos de la perseverancia de ambos en esta relación y tu compañía cada vez me hace más y más fuerte, te amo cada día un poquito más...",
     2026: "2026 llegó, no tenemos demasiado recorrido de este año pero si logramos pegarnos a Dios y ver con sus ojos creo que podemos estar enormemente agradecidos por esto que Dios unió y que no ha parado de dar frutos, gracias por seguir aquí a mi lado mi Peisa te amo, feliz 14 feliz 14 😘..."
 };
 

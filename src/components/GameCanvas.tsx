@@ -269,9 +269,18 @@ export const GameCanvas = ({ levelIndex, initialScore, onWin }: GameCanvasProps)
     }, [initLevel]);
 
     // Touch Controls
-    const handleTouchLeft = () => { playerRef.current.moveLeft(); };
-    const handleTouchRight = () => { playerRef.current.moveRight(); };
-    const handleTouchFire = () => { fireBullet(); };
+    const handleTouchLeft = (e: React.TouchEvent | React.MouseEvent) => {
+        if (e.cancelable && e.type.startsWith('touch')) e.preventDefault();
+        playerRef.current.moveLeft();
+    };
+    const handleTouchRight = (e: React.TouchEvent | React.MouseEvent) => {
+        if (e.cancelable && e.type.startsWith('touch')) e.preventDefault();
+        playerRef.current.moveRight();
+    };
+    const handleTouchFire = (e: React.TouchEvent | React.MouseEvent) => {
+        if (e.cancelable && e.type.startsWith('touch')) e.preventDefault();
+        fireBullet();
+    };
 
     return (
         <div

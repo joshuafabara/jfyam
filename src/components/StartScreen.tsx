@@ -14,10 +14,16 @@ export const StartScreen = ({ onStart }: { onStart: () => void }) => {
 
             <div className="relative mb-16 flex items-center justify-center gap-4 md:gap-12 w-full max-w-4xl z-20">
                 {/* Joshua Image (Left) */}
-                <div className="relative w-[100px] h-[100px] md:w-[150px] md:h-[150px] rounded-full overflow-hidden border-4 border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.5)] animate-float-slow">
-                    <img src={joshuaImg} alt="Joshua" className="w-full h-full object-cover filter blur-[0.5px] contrast-125 brightness-110" />
-                    <div className="absolute inset-0 bg-blue-500/20 mix-blend-overlay"></div>
-                    <div className="scanline absolute inset-0 opacity-50 pointer-events-none"></div>
+                <div className="relative w-[100px] h-[100px] md:w-[150px] md:h-[150px] animate-float-slow z-10">
+                    {/* Border Layer (On Top) */}
+                    <div className="absolute inset-0 rounded-full border-4 border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.5)] z-20 pointer-events-none"></div>
+
+                    {/* Image Layer (Masked) */}
+                    <div className="w-full h-full rounded-full overflow-hidden" style={{ WebkitMaskImage: 'radial-gradient(circle, white 100%, black 100%)', maskImage: 'radial-gradient(circle, white 100%, black 100%)' }}>
+                        <img src={joshuaImg} alt="Joshua" className="w-full h-full object-cover filter blur-[0.5px] contrast-125 brightness-110" />
+                        <div className="absolute inset-0 bg-blue-500/20 mix-blend-overlay"></div>
+                        <div className="scanline absolute inset-0 opacity-50 pointer-events-none"></div>
+                    </div>
                 </div>
 
                 {/* Central Heart Icon */}
@@ -31,10 +37,16 @@ export const StartScreen = ({ onStart }: { onStart: () => void }) => {
                 </div>
 
                 {/* Amel Image (Right) */}
-                <div className="relative w-[100px] h-[100px] md:w-[150px] md:h-[150px] rounded-full overflow-hidden border-4 border-pink-500 shadow-[0_0_20px_rgba(236,72,153,0.5)] animate-float-slow-delay">
-                    <img src={amelImg} alt="Amel" className="w-full h-full object-cover filter blur-[0.5px] contrast-125 brightness-110" />
-                    <div className="absolute inset-0 bg-pink-500/20 mix-blend-overlay"></div>
-                    <div className="scanline absolute inset-0 opacity-50 pointer-events-none"></div>
+                <div className="relative w-[100px] h-[100px] md:w-[150px] md:h-[150px] animate-float-slow-delay z-10">
+                    {/* Border Layer (On Top) */}
+                    <div className="absolute inset-0 rounded-full border-4 border-pink-500 shadow-[0_0_20px_rgba(236,72,153,0.5)] z-20 pointer-events-none"></div>
+
+                    {/* Image Layer (Masked) */}
+                    <div className="w-full h-full rounded-full overflow-hidden" style={{ WebkitMaskImage: 'radial-gradient(circle, white 100%, black 100%)', maskImage: 'radial-gradient(circle, white 100%, black 100%)' }}>
+                        <img src={amelImg} alt="Amel" className="w-full h-full object-cover filter blur-[0.5px] contrast-125 brightness-110" />
+                        <div className="absolute inset-0 bg-pink-500/20 mix-blend-overlay"></div>
+                        <div className="scanline absolute inset-0 opacity-50 pointer-events-none"></div>
+                    </div>
                 </div>
             </div>
 
