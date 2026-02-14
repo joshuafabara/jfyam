@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { GameCanvas } from './components/GameCanvas';
 import { StartScreen } from './components/StartScreen';
 import { PhotoGallery } from './components/PhotoGallery';
@@ -7,6 +7,52 @@ import { ToBeContinued } from './components/ToBeContinued';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { LEVELS, TOTAL_LEVELS } from './game/config';
+
+// Zoom reset button — only appears if user somehow triggers a zoom
+const ZoomResetButton = () => {
+  const [zoomed, setZoomed] = useState(false);
+
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+    const check = () => setZoomed(vv.scale > 1.05);
+    vv.addEventListener('resize', check);
+    return () => vv.removeEventListener('resize', check);
+  }, []);
+
+  const resetZoom = useCallback(() => {
+    // Force viewport reset by toggling the meta tag
+    const meta = document.querySelector('meta[name="viewport"]');
+    if (meta) {
+      meta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+      // Brief toggle to force Safari to re-evaluate
+      setTimeout(() => {
+        meta.setAttribute('content', 'width=device-width, initial-scale=0.99, maximum-scale=1.0, user-scalable=no');
+        setTimeout(() => {
+          meta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+        }, 50);
+      }, 50);
+    }
+    setZoomed(false);
+  }, []);
+
+  if (!zoomed) return null;
+
+  return (
+    <button
+      onClick={resetZoom}
+      onTouchEnd={(e) => { e.preventDefault(); resetZoom(); }}
+      className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[999] w-16 h-16 bg-black/80 border-2 border-white/60 rounded-full flex items-center justify-center text-white shadow-lg backdrop-blur-sm active:bg-white/20"
+      title="Reset Zoom"
+    >
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        <line x1="8" y1="11" x2="14" y2="11" />
+      </svg>
+    </button>
+  );
+};
 
 // Theme toggler component
 const ThemeToggle = () => {
@@ -84,6 +130,9 @@ function App() {
             <ThemeToggle />
             <LanguageToggle />
           </div>
+
+          {/* Zoom reset safety net — appears centered if user triggers zoom */}
+          <ZoomResetButton />
 
           {gameState === 'START' && (
             <StartScreen onStart={startGame} />
