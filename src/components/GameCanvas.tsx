@@ -43,7 +43,7 @@ export const GameCanvas = ({ levelIndex, initialScore, onWin }: GameCanvasProps)
     // UI State
     const [lives, setLives] = useState(3);
     const [score, setScore] = useState(initialScore);
-    const [timeLeft, setTimeLeft] = useState(30);
+    const [timeLeft, setTimeLeft] = useState(LEVELS[levelIndex].timer);
     const [isGameOver, setIsGameOver] = useState(false);
     const [showLevelIntro, setShowLevelIntro] = useState(true);
 
@@ -68,7 +68,7 @@ export const GameCanvas = ({ levelIndex, initialScore, onWin }: GameCanvasProps)
         setLives(3);
         scoreRef.current = initialScore;
         setScore(initialScore);
-        setTimeLeft(30);
+        setTimeLeft(config.timer);
         lastShotTimeRef.current = 0;
 
         // Create Invaders
